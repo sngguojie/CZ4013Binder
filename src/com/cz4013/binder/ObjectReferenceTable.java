@@ -17,11 +17,11 @@ public class ObjectReferenceTable {
 
     public String addObjectReference(String name, String remoteObjRef) throws NameExistsException{
         if (this.objectReferenceHashMap.containsKey(name)){
-            throw new NameExistsException("Failure Remote Reference Name already exists.");
+            this.objectReferenceHashMap.replace(name, remoteObjRef);
         } else {
             this.objectReferenceHashMap.put(name, remoteObjRef);
-            return "Success adding object to reference table.";
         }
+        return "Success adding object to reference table.";
     }
 
     public String getObjectReference(String name) throws NameDoesNotExistException{
