@@ -18,6 +18,11 @@ public class CommunicationModule extends Thread{
     private final int MAX_BYTE_SIZE = 1024;
     private ObjectReferenceTable objRefTable;
 
+    /**
+     * Constructor that creates a socket with the given port
+     * @param binderPort
+     * @throws IOException
+     */
     public CommunicationModule(int binderPort) throws IOException {
         super("CommunicationModule");
         socket = new DatagramSocket(new InetSocketAddress(binderPort));
@@ -26,6 +31,9 @@ public class CommunicationModule extends Thread{
         this.port = binderPort;
     }
 
+    /**
+     * Continuously wait for any packet to arrive
+     */
     public void waitForPacket () {
         while (this.isRunning) {
             try {
@@ -41,12 +49,24 @@ public class CommunicationModule extends Thread{
             }
         }
     }
+
+    /**
+     * Gets called when start() is called. Starts waitForPacket().
+     */
     public void run () {
         System.out.println("CommunicationModule Running");
         waitForPacket();
         socket.close();
     }
 
+    /**
+     * Handles incoming packets. If packets begin with "GET", retrieve reference from ObjectReferenceTable. If packets begin with "ADD"
+     * add reference to ObjectReferenceTable.
+     * @param packetBytes
+     * @param address
+     * @param port
+     * @throws IOException
+     */
     public void handlePacketIn(byte[] packetBytes, InetAddress address, int port) throws IOException{
         String result = new String(packetBytes);
         String[] arguments = result.split(" ");
@@ -72,11 +92,22 @@ public class CommunicationModule extends Thread{
         sendResponsePacketOut(payload, address, port);
     }
 
+    /**
+     * Sends a response back out.
+     * @param payload
+     * @param address
+     * @param port
+     * @throws IOException
+     */
     public void sendResponsePacketOut(byte[] payload, InetAddress address, int port) throws IOException{
         DatagramPacket packet = new DatagramPacket(payload, payload.length, address, port);
         socket.send(packet);
     }
 
+    /**
+     * Set the ObjectReferenceTable for use in this module
+     * @param ort
+     */
     public void setObjectReferenceTable(ObjectReferenceTable ort){
         this.objRefTable = ort;
     }

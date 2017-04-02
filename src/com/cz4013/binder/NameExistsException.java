@@ -5,8 +5,15 @@ package com.cz4013.binder;
  */
 public class NameExistsException extends Exception {
 
+    /**
+     * Constructor
+     */
     public NameExistsException(){}
 
+    /**
+     * Constructor that takes in a message
+     * @param message
+     */
     public NameExistsException(String message){
         super(message);
     }

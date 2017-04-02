@@ -5,10 +5,15 @@ package com.cz4013.binder;
  */
 public class NameDoesNotExistException extends Exception {
 
-    //Parameterless Constructor
+    /**
+     * Constructor
+     */
     public NameDoesNotExistException() {}
 
-    //Constructor that accepts a message
+    /**
+     * Constructor that takes in a message
+     * @param message
+     */
     public NameDoesNotExistException(String message)
     {
         super(message);

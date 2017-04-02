@@ -15,6 +15,14 @@ public class ObjectReferenceTable {
         this.objectReferenceHashMap = new HashMap<String, String>();
     }
 
+    /**
+     * Add a name and object reference into the hashmap. If name already exists, will replace object. This is in case the server restarts.
+     * The object reference should be in the form of "IPAddress,PORT,ObjectHashCode"
+     * @param name
+     * @param remoteObjRef
+     * @return
+     * @throws NameExistsException
+     */
     public String addObjectReference(String name, String remoteObjRef) throws NameExistsException{
         if (this.objectReferenceHashMap.containsKey(name)){
             this.objectReferenceHashMap.replace(name, remoteObjRef);
@@ -24,6 +32,12 @@ public class ObjectReferenceTable {
         return "Success adding object to reference table.";
     }
 
+    /**
+     * Get an object reference from the name. If it does not exist, throw a NameDoesNotExistException.
+     * @param name
+     * @return
+     * @throws NameDoesNotExistException
+     */
     public String getObjectReference(String name) throws NameDoesNotExistException{
         if (this.objectReferenceHashMap.containsKey(name)) {
             return "Success " + this.objectReferenceHashMap.get(name);

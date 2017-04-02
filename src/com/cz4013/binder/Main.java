@@ -19,9 +19,12 @@ public class Main {
             port = 2219;
         }
 
+        // create new object reference table and communication module
         ObjectReferenceTable ort = new ObjectReferenceTable();
         CommunicationModule cm = new CommunicationModule(port);
         cm.setObjectReferenceTable(ort);
+
+        // start the communication module
         cm.start();
 
 
